@@ -8,4 +8,8 @@ public class BaseEntity
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
+
+    public DateTime CreatedDateTime { get; set; } = DateTime.Now;
+
+    public DateTime UpdatedDateTime { get; set; } = DateTime.Now;
 }

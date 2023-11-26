@@ -1,7 +1,6 @@
 using BookStore.API.Models;
-using BookStore.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using BookStore.API.Repositories;
+using BookStore.API.Services.Contracts;
 
 namespace BookStore.API.Controllers;
 
@@ -9,15 +8,19 @@ namespace BookStore.API.Controllers;
 [ApiController]
 public class BookController : ControllerBase
 {
-    private readonly BookService _bookService;
+    private readonly IBookService _bookService;
 
-    public BookController(MyMongoRepository repo)
+    public BookController(IBookService bookService)
     {
-        _bookService = new BookService(repo);
+        _bookService = bookService;
     }
 
     [HttpGet]
-    public async Task<List<Book>> Get() => await _bookService.GetListAsync();
+    public async Task<List<Book>> Get()
+    {
+        var books = await _bookService.GetListAsync();
+        return books;
+    }
 
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<Book>> Get(string id)
@@ -35,7 +38,7 @@ public class BookController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Book newBook)
     {
-        await _bookService.CreateAsync(newBook);
+        await _bookService.AddAsync(newBook);
 
         return NoContent();
     }

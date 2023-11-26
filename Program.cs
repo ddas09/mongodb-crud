@@ -1,12 +1,15 @@
 using BookStore.API.Models;
-using BookStore.API.Repositories;
+using BookStore.API.Services;
+using BookStore.API.DAL.Contracts;
+using BookStore.API.DAL.Repositories;
+using BookStore.API.Services.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
-builder.Services.AddSingleton<MyMongoRepository>();
-
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 builder.Services.AddControllers();
 
