@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MongoDB.CRUD.API.Controllers;
+namespace BookStore.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class HomeController : ControllerBase
 {
     [HttpGet]
